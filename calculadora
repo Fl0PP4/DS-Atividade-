@@ -1,0 +1,42 @@
+// 1. Variáveis e Seleção de Elementos (DOM)
+const inputPecas = document.getElementById('pecas');
+const inputMaoDeObra = document.getElementById('maoDeObra');
+const seletorOperacao = document.getElementById('operacao');
+const btnCalcular = document.getElementById('btnCalcular');
+const displayResultado = document.getElementById('resultado');
+
+// 2. Função de Cálculo
+function calcularOrcamento() {
+   
+    const valor1 = Number(inputPecas.value);
+    const valor2 = Number(inputMaoDeObra.value);
+    const operacao = seletorOperacao.value;
+    
+    let total = 0;
+
+ 
+    if (operacao === 'soma') {
+        total = valor1 + valor2;
+    } else if (operacao === 'subtracao') {
+        total = valor1 - valor2;
+    } else if (operacao === 'multiplicacao') {
+        total = valor1 * valor2;
+    } else if (operacao === 'divisao') {
+       
+        total = valor2 !== 0 ? valor1 / valor2 : "Erro: Divisão por 0";
+    }
+
+    mostrarNaTela(total);
+}
+
+
+function mostrarNaTela(valor) {
+    if (typeof valor === 'number') {
+        displayResultado.textContent = `Total: R$ ${valor.toFixed(2)}`;
+    } else {
+        displayResultado.textContent = valor;
+    }
+}
+
+
+btnCalcular.addEventListener('click', calcularOrcamento);
