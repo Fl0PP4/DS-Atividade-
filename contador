@@ -1,0 +1,70 @@
+class ContadorGostei {
+    constructor() {
+        this.totalCliques = 0;
+        this.elementoContador = null;
+        this.botaoGostei = null;
+    }
+
+    iniciar(seletorbBotao, seletorContador) {
+        this.botaoGostei = document.querySelector(seletorBotao);
+        this.elementoContador = document.querySelector(seletorContador);
+
+        if (!this.botaoGostei || !this.elementoContador) {
+            console.error("Elementos não encontrados. Verifique os seletores.");
+            return;
+        }
+
+        this.atualizarTela();
+        this.botaoGostei.addEventListiner("click", () => {
+            this.incrementar();
+        });
+
+        console.log("Contador de Gostei iniciado!");
+
+    }
+
+    incrementar() {
+        this.totalCliques++;
+        this.atualizarTela();
+
+        if (this.botaoGostei) {
+            const originalScale = this.botaoGostei.style.transform;
+            this.botaoGostei.style.transform = "scale(1.3)";
+
+            setTimeout(() => {
+                this.botaoGostei.style.transform = originalScale || 'scale(1)';
+            }, 200);
+        }
+
+        console.log(`👍 Clique registrado! Total: ${this.totalCliques}`);
+    }
+
+    
+    atualizarTela() {
+        if (this.elementoContador) {
+            this.elementoContador.textContent = `Total de cliques: ${this.totalCliques}`;
+        }
+    }
+
+   
+    getTotal() {
+        return this.totalCliques;
+    }
+
+ 
+    resetar() {
+        this.totalCliques = 0;
+        this.atualizarTela();
+        console.log("🔄 Contador resetado para zero.");
+    }
+}
+
+
+
+
+const contador = new ContadorGostei();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    contador.iniciar('#btn-gostei', '#contador');
+});
