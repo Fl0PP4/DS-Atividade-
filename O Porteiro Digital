@@ -1,0 +1,87 @@
+
+
+class VerificadorIdade {
+    constructor() {
+        this.campoIdade = null;
+        this.botaoVerificar = null;
+        this.resultado = null;
+    }
+
+    // Inicializar o sistema
+    iniciar(seletorCampo, seletorBotao, seletorResultado) {
+        this.campoIdade = document.querySelector(seletorCampo);
+        this.botaoVerificar = document.querySelector(seletorBotao);
+        this.resultado = document.querySelector(seletorResultado);
+
+        if (!this.campoIdade || !this.botaoVerificar || !this.resultado) {
+            console.error("Um ou mais elementos não foram encontrados.");
+            return;
+        }
+
+        // Adiciona o evento de clique
+        this.botaoVerificar.addEventListener('click', () => {
+            this.verificar();
+        });
+
+        // Permite verificar pressionando Enter no campo
+        this.campoIdade.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.verificar();
+            }
+        });
+
+        console.log("🔎 Verificador de Idade iniciado!");
+    }
+
+
+    verificar() {
+        const idadeStr = this.campoIdade.value.trim();
+        
+       
+        if (idadeStr === '') {
+            this.mostrarResultado("Por favor, digite sua idade.", "orange");
+            return;
+        }
+
+        const idade = parseInt(idadeStr);
+
+        if (isNaN(idade) || idade < 0) {
+            this.mostrarResultado("Digite uma idade válida.", "orange");
+            return;
+        }
+
+       
+        if (idade >= 18) {
+            this.mostrarResultado("Entrada permitida", "green");
+        } else {
+            this.mostrarResultado("Entrada proibida", "red");
+        }
+    }
+
+  
+    mostrarResultado(mensagem, cor) {
+        this.resultado.textContent = mensagem;
+        this.resultado.style.color = cor;
+        this.resultado.style.fontWeight = "bold";
+        this.resultado.style.fontSize = "1.4rem";
+        this.resultado.style.marginTop = "20px";
+    }
+
+    limpar() {
+        this.campoIdade.value = '';
+        this.resultado.textContent = '';
+    }
+}
+
+
+
+const verificador = new VerificadorIdade();
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    verificador.iniciar(
+        '#idade',           
+        '#btn-verificar',  
+        '#resultado'      
+    );
+});
